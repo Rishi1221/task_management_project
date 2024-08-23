@@ -6,16 +6,18 @@ if (strlen($_SESSION['adminid']==0)) {
 //Code for Updation 
 if(isset($_POST['update']))
 {
-    $fname=$_POST['fname'];
-    $lname=$_POST['lname'];
-    $contact=$_POST['contact'];
-$userid=$_GET['uid'];
-    $msg=mysqli_query($con,"update users set fname='$fname',lname='$lname',contactno='$contact' where id='$userid'");
+    $tname=$_POST['tname'];
+    $id=$_POST['id'];
+    $tstatus=$_POST['tstatus'];
+    $tdeadline=$_POST['tdeadline'];
+  
+$taskid=$_GET['tid'];
+    $msg=mysqli_query($con,"update tasks set tname='$tname', id='$id', tstatus='$tstatus',tdeadline='$tdeadline'  where tid='$taskid'");
 
 if($msg)
 {
-    echo "<script>alert('Profile updated successfully');</script>";
-       echo "<script type='text/javascript'> document.location = 'manage-users.php'; </script>";
+    echo "<script>alert('Task updated successfully');</script>";
+       echo "<script type='text/javascript'> document.location = 'manage-tasks.php'; </script>";
 }
 }
 
@@ -44,33 +46,31 @@ if($msg)
                     <div class="container-fluid px-4">
                         
 <?php 
-$userid=$_GET['uid'];
-$query=mysqli_query($con,"select * from users where id='$userid'");
+$taskid=$_GET['tid'];
+$query=mysqli_query($con,"select * from tasks where tid='$taskid'");
 while($result=mysqli_fetch_array($query))
 {?>
-                        <h1 class="mt-4"><?php echo $result['fname'];?>'s Profile</h1>
+                        <h1 class="mt-4">Update Task</h1>
                         <div class="card mb-4">
                      <form method="post">
                             <div class="card-body">
                                 <table class="table table-bordered">
                                    <tr>
-                                    <th>First Name</th>
-                                       <td><input class="form-control" id="fname" name="fname" type="text" value="<?php echo $result['fname'];?>" required /></td>
+                                    <th>Task Details</th>
+                                       <td><input class="form-control" id="tname" name="tname" type="text" value="<?php echo $result['tname'];?>" required /></td>
                                    </tr>
                                    <tr>
-                                       <th>Last Name</th>
-                                       <td><input class="form-control" id="lname" name="lname" type="text" value="<?php echo $result['lname'];?>"  required /></td>
-                                   </tr>
-                                         <tr>
-                                       <th>Contact No.</th>
-                                       <td colspan="3"><input class="form-control" id="contact" name="contact" type="text" value="<?php echo $result['contactno'];?>"  pattern="[0-9]{10}" title="10 numeric characters only"  maxlength="10" required /></td>
+                                       <th>Userid</th>
+                                       <td colspan="3"><input class="form-control" id="id" name="id" type="text" value="<?php echo $result['id'];?>"  required /></td>
                                    </tr>
                                    <tr>
-                                       <th>Email</th>
-                                       <td colspan="3"><?php echo $result['email'];?></td>
+                                       <th>Status</th>
+                                       <td><input class="form-control" id="tstatus" name="tstatus" type="text" value="<?php echo $result['tstatus'];?>"  required /></td>
                                    </tr>
-                               
-                                     
+                                   <th>Deadline</th>
+                                       <td><input class="form-control" id="tdeadline" name="tdeadline" type="date" value="<?php echo $result['tdeadline'];?>"  required /></td>
+                                   </tr>
+                                                                                                             
                                         <tr>
                                        <th>Reg. Date</th>
                                        <td colspan="3"><?php echo $result['posting_date'];?></td>
